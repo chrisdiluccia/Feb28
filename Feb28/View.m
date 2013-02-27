@@ -15,7 +15,7 @@
 	self = [super initWithFrame: frame];
 	if (self) {
 		// Initialization code
-		self.backgroundColor = [UIColor whiteColor];
+		self.backgroundColor = [UIColor orangeColor];
 	}
 	return self;
 }
@@ -30,77 +30,45 @@
 	CGFloat h = self.bounds.size.height;
 	CGContextRef c = UIGraphicsGetCurrentContext();
     
-	//seven red stripes
+	//draw yello square in the upper right corner
 	CGContextBeginPath(c);
-	CGContextAddRect(c, CGRectMake( 0 * w / 13, 0, w / 13, h));
-	CGContextAddRect(c, CGRectMake( 2 * w / 13, 0, w / 13, h));
-	CGContextAddRect(c, CGRectMake( 4 * w / 13, 0, w / 13, h));
-	CGContextAddRect(c, CGRectMake( 6 * w / 13, 0, w / 13, h));
-	CGContextAddRect(c, CGRectMake( 8 * w / 13, 0, w / 13, h));
-	CGContextAddRect(c, CGRectMake(10 * w / 13, 0, w / 13, h));
-	CGContextAddRect(c, CGRectMake(12 * w / 13, 0, w / 13, h));
-    
-	CGContextSetRGBFillColor(c, 1.0, 0.0, 0.0, 1.0);
+	CGContextAddRect(c, CGRectMake(w-(w/3), h-h, w/3, w/3));
+	CGContextSetRGBFillColor(c, 1.0, 1.0, 0.0, 0.5);
+	CGContextFillPath(c);
+    //draw green square in the lower left corner
+    CGContextAddRect(c, CGRectMake(w-w, h-(w/3), w/3, w/3));
+	CGContextSetRGBFillColor(c, 0.0, 1.0, 0.0, 0.5);
+	CGContextFillPath(c);
+    //draw blue square in the upper left corner
+    CGContextAddRect(c, CGRectMake(w-w, h-h, w/3, w/3));
+	CGContextSetRGBFillColor(c, 0.0, 0.0, 1.0, 0.5);
+	CGContextFillPath(c);
+    //draw red square in the lower right corner
+    CGContextAddRect(c, CGRectMake(w-(w/3), h-(w/3), w/3, w/3));
+	CGContextSetRGBFillColor(c, 1.0, 0.0, 0.0, 0.5);
+	CGContextFillPath(c);
+
+	//Cross that will fill up everything except for a small gap around each box
+    //First draw vertical, then draw horizontal
+	CGContextBeginPath(c);
+	CGContextAddRect(c, CGRectMake((w/2)-w/8,h-h,w/4,h));
+	CGContextSetRGBFillColor(c, 0.0, 1.0, 1.0, 1.0);
 	CGContextFillPath(c);
     
-	//blue union jack
-	CGContextBeginPath(c);
-	CGContextAddRect(c, CGRectMake(w * 6 / 13, 0, w * 7 / 13, h * 2 / 5));
-	CGContextSetRGBFillColor(c, 0.0, 0.0, 1.0, 1.0);
-	CGContextFillPath(c);
+    CGContextBeginPath(c);
+    CGContextAddRect(c, CGRectMake(w-w,(h/2)-h/4,w,h/2));
+    CGContextSetRGBFillColor(c, 0.0, 1.0, 1.0, 1.0);
+    CGContextFillPath(c);
     
-	//White star has 5 vertices (points).
-	CGPoint center = CGPointMake((6 + 3.5) * w / 13, h / 5); //of union jack
-	CGFloat radius = h / 10;	//of circle that the 5 vertices touch
-	CGContextBeginPath(c);
-    
-	CGFloat theta = 0;		//Start with vertex pointing to right.
-	CGContextMoveToPoint(c,
-                         center.x + radius * cosf(theta),
-                         center.y - radius * sinf(theta)
-                         );
-    
-	theta += 2 * M_PI * 2 / 5;		//vertex pointing to upper left
-	CGContextAddLineToPoint(c,
-                            center.x + radius * cosf(theta),
-                            center.y - radius * sinf(theta)
-                            );
-    
-	theta += 2 * M_PI * 2 / 5;		//vertex pointing to lower right
-	CGContextAddLineToPoint(c,
-                            center.x + radius * cosf(theta),
-                            center.y - radius * sinf(theta)
-                            );
-    
-	theta += 2 * M_PI * 2 / 5;		//vertex pointing to upper right
-	CGContextAddLineToPoint(c,
-                            center.x + radius * cosf(theta),
-                            center.y - radius * sinf(theta)
-                            );
-    
-	theta += 2 * M_PI * 2 / 5;		//vertex pointing to lower left
-	CGContextAddLineToPoint(c,
-                            center.x + radius * cosf(theta),
-                            center.y - radius * sinf(theta)
-                            );
-    
-	//Works even though the star's outline intersects with itself.
-	CGContextClosePath(c);
-	CGContextSetRGBFillColor(c, 1.0, 1.0, 1.0, 1.0);
-	CGContextFillPath(c);
-    
-	//The actor George C. Scott played General George S. Patton (1970).
-	UIImage *image = [UIImage imageNamed: @"milachris.png"];	//604 by 604
+	//Image of my cat sitting on my shoulder while I eat ice cream (2013)
+	UIImage *image = [UIImage imageNamed: @"milachris.png"];	//200 by 200
 	if (image == nil) {
 		NSLog(@"could not find the image");
 		return;
 	}
     
-	//upper left corner of image
-	CGPoint point = CGPointMake(
-                                (w - image.size.width) / 2,
-                                h - image.size.height - 20
-                                );
+	//Center my image
+	CGPoint point = CGPointMake(w/2 - image.size.width/2, h/2 - image.size.height/2);
     
 	[image drawAtPoint: point];
 }
