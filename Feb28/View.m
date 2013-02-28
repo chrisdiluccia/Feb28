@@ -55,10 +55,20 @@
 	CGContextSetRGBFillColor(c, 0.0, 1.0, 1.0, 1.0);
 	CGContextFillPath(c);
     
-    CGContextBeginPath(c);
-    CGContextAddRect(c, CGRectMake(w-w,(h/2)-h/4,w,h/2));
-    CGContextSetRGBFillColor(c, 0.0, 1.0, 1.0, 1.0);
-    CGContextFillPath(c);
+    if(h == 548)//check if it's an iPhone 5, if yes then the horizontal rect needs to be taller
+    {
+        CGContextBeginPath(c);
+        CGContextAddRect(c, CGRectMake(w-w,(h/2)-h/3.5,w,h/1.75));
+        CGContextSetRGBFillColor(c, 0.0, 1.0, 1.0, 1.0);
+        CGContextFillPath(c);
+    }
+    else //not an iPhone 5
+    {
+        CGContextBeginPath(c);
+        CGContextAddRect(c, CGRectMake(w-w,(h/2)-h/4.1,w,h/2.05));
+        CGContextSetRGBFillColor(c, 0.0, 1.0, 1.0, 1.0);
+        CGContextFillPath(c);
+    }
     
 	//Image of my cat sitting on my shoulder while I eat ice cream (2013)
 	UIImage *image = [UIImage imageNamed: @"milachris.png"];	//200 by 200
